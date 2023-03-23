@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}The Social Network{% endblock %}</title>
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
@@ -13,7 +14,50 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="font-[Lato] bg-gray-100">
+        <header class="shadow-md bg-white">
+            <div class="flex items-center justify-between max-w-4xl mx-auto px-3">
+                <div class="flex items-center">
+                    <h1 class="font-bold text-gray-800 text-lg">
+                        <a href="{{ path('app_home') }}">The Social Network</a>
+                    </h1>
+                    {% set route = app.request.get('_route') %}
+                    <nav class="ml-4">
+                        <ul class="flex">
+                            <li class="px-3">
+                                <a class="inline-flex py-4 border-b-2 hover:text-blue-500 hover:border-blue-500 {{ route == 'app_home' ? 'text-blue-500 border-blue-500' : 'text-gray-400 border-transparent' }}" href="{{ path('app_home') }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                    </svg>
+                                    <span class="ml-3 hidden lg:inline">Accueil</span>
+                                </a>
+                            </li>
+                            <li class="px-3">
+                                <a class="inline-flex py-4 border-b-2 hover:text-blue-500 hover:border-blue-500 {{ route == 'app_member_index' ? 'text-blue-500 border-blue-500' : 'text-gray-400 border-transparent' }}" href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                                    </svg>
+                                    <span class="ml-3 hidden lg:inline">Membres</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div>
+                    <a href="#" class="flex items-center">
+                        <img class="w-8 h-8 rounded-full mr-3" src="https://randomuser.me/api/portraits/women/12.jpg" alt="Fiorella">
+                        <span class="font-bold">Fiorella</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <div class="max-w-4xl mx-auto px-3 mt-8">
+            {% block body %}{% endblock %}
+        </div>
+
+        <footer class="max-w-4xl mx-auto px-3 my-8 py-8 border-t">
+            <p class="text-center text-gray-500">Copyright &copy; The Social Network.</p>
+        </footer>
     </body>
 </html>
