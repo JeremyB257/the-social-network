@@ -4,7 +4,7 @@
         <div>
             <h2 class="font-bold text-gray-800 text-sm mb-1">
                 {{ post.creator.firstname }}
-                <span class="text-xs font-light ml-1">{{ post.createdAt | ago }}</span>
+                <span class="text-xs font-light ml-1" title="{{ post.createdAt.format('d/m/Y h:i:s') }}">{{ post.createdAt | ago }}</span>
             </h2>
             <div>
                 {{ post.content }}
