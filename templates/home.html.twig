@@ -1,7 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% for post in posts %}
-        {{ include('_post.html.twig') }}
-    {% endfor %}
+    <div class="flex flex-wrap justify-center">
+        {% if app.user %}
+            <div class="lg:w-1/4">
+                <div class="sticky top-5">
+                    <img class="w-32 rounded-full border-4 border-white shadow-md mx-auto mb-4" src="{{ asset(app.user.avatar) }}" alt="{{ app.user.firstname }}">
+                    <h2 class="text-lg text-center">Bonjour {{ app.user.firstname }},</h2>
+                    <h2 class="text-lg text-center mb-4">comment vas-tu ?</h2>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="{% if app.user %}lg:w-3/4{% endif %}">
+            {% for post in posts %}
+                {{ include('_post.html.twig') }}
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
