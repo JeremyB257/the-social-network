@@ -1,6 +1,8 @@
 <div class="bg-white mb-8 p-4 rounded shadow">
     <div class="flex">
+        {% if post.creator.avatar %}
         <img class="w-8 h-8 rounded-full shadow-md mr-3" src="{{ asset(post.creator.avatar) }}" alt="Fiorella">
+        {% endif %}
         <div>
             <h2 class="font-bold text-gray-800 text-sm mb-1">
                 {{ post.creator.firstname }}

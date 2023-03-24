@@ -30,7 +30,7 @@ class AppFixtures extends Fixture
         $user->setBiography('Une petite fille incroyable.');
         $manager->persist($user);
         $users[] = $user;
-        
+
         for ($i = 2; $i <= 10; $i++) {
             $gender = $faker->randomElement(['men', 'women']);
             $people = rand(1, 99);
