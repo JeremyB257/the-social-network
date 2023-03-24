@@ -2,19 +2,6 @@
 
 {% block body %}
     {% for post in posts %}
-        <div class="bg-white mb-8 p-4 rounded shadow">
-            <div class="flex">
-                <img class="w-8 h-8 rounded-full mr-3" src="{{ asset(post.creator.avatar) }}" alt="Fiorella">
-                <div>
-                    <h2 class="font-bold text-gray-800 text-sm mb-1">
-                        {{ post.creator.firstname }}
-                        <span class="text-xs font-light ml-1">il y a 3 heures</span>
-                    </h2>
-                    <div>
-                        {{ post.content }}
-                    </div>
-                </div>
-            </div>
-        </div>
+        {{ include('_post.html.twig') }}
     {% endfor %}
 {% endblock %}
