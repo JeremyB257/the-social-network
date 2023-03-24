@@ -6,12 +6,14 @@
     <div class="flex flex-wrap">
         {% for user in members %}
             <div class="w-1/2 lg:w-1/5 mb-3">
-                <div class="bg-white rounded-t mx-2">
+                <div class="bg-white rounded-t mx-2 border">
                     <a href="{{ path('app_user_show', { username: user.username }) }}">
                         <img class="w-full h-32 object-cover rounded-t" src="{{ asset(user.avatar) }}" alt="{{ user.firstname }}">
                         <div class="px-2 py-4">
-                            <span class="text-blue-500">{{ user.firstname }}</span>
-                            ({{ user.age }} ans)
+                            <p>
+                                <span class="text-blue-500">{{ user.firstname }}</span> ({{ user.age }} ans)
+                            </p>
+                            <p>{{ user.posts.count }} publications</p>
                         </div>
                     </a>
                 </div>
