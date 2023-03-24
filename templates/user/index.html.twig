@@ -8,10 +8,15 @@
             <div class="w-1/2 lg:w-1/5 mb-3">
                 <div class="bg-white rounded-t mx-2 border">
                     <a href="{{ path('app_user_show', { username: user.username }) }}">
+                        {% if app.user.avatar %}
                         <img class="w-full h-32 object-cover rounded-t" src="{{ asset(user.avatar) }}" alt="{{ user.firstname }}">
+                        {% endif %}
                         <div class="px-2 py-4">
                             <p>
-                                <span class="text-blue-500">{{ user.firstname }}</span> ({{ user.age }} ans)
+                                <span class="text-blue-500">{{ user.firstname }}</span>
+                                {% if user.age %}
+                                    ({{ user.age }} ans)
+                                {% endif %}
                             </p>
                             <p>{{ user.posts.count }} publications</p>
                         </div>

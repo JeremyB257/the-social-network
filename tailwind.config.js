@@ -3,7 +3,7 @@ module.exports = {
   content: [
     './assets/**/*.js',
     './templates/**/*.html.twig',
-    './vendor/symfony/twig-bridge/Resources/views/Form/*.html.php',
+    './vendor/symfony/twig-bridge/Resources/views/Form/*.html.twig',
   ],
   theme: {
     extend: {},
