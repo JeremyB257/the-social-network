@@ -7,10 +7,12 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UserController extends AbstractController
 {
     #[Route('/membres', name: 'app_user')]
+    #[IsGranted('ROLE_USER')]
     public function index(UserRepository $repository): Response
     {
         return $this->render('user/index.html.twig', [
