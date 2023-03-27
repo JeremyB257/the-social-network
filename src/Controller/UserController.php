@@ -49,12 +49,21 @@ class UserController extends AbstractController
     }
 
     #[Route('/membre/profil/modifier', name: 'app_user_edit')]
-    public function edit(Request $request, SluggerInterface $slugger, EntityManagerInterface $manager)
-    {
+    #[IsGranted('ROLE_USER')]
+    public function edit(
+        Request $request,
+        SluggerInterface $slugger,
+        EntityManagerInterface $manager
+    ) {
         /** @var User $user */
         $user = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+
+        // Evite le bug de "logout"
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $manager->refresh($user);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Pseudo (@todo bug when double ?)
