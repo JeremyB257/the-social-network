@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use App\Security\AppAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +14,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -24,7 +24,8 @@ class RegistrationController extends AbstractController
         UserAuthenticatorInterface $userAuthenticator,
         AppAuthenticator $authenticator,
         EntityManagerInterface $entityManager,
-        SluggerInterface $slugger
+        SluggerInterface $slugger,
+        UserRepository $repository
     ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -40,7 +41,18 @@ class RegistrationController extends AbstractController
             );
 
             // Pseudo
-            $user->setUsername($slugger->slug($user->getFirstname())->lower());
+            $baseUsername = $slugger->slug($user->getFirstname())->lower();
+            $username = $baseUsername;
+            $currentCount = 1;
+            $count = $repository->count(['username' => $username]);
+
+            while ($count >= 1 && $username !== $user->getUsername()) {
+                $currentCount++;
+                $username = $baseUsername.'-'.$currentCount;
+                $count = $repository->count(['username' => $username]);
+            }
+
+            $user->setUsername($username);
 
             $entityManager->persist($user);
             $entityManager->flush();

@@ -9,6 +9,8 @@ use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -53,7 +55,8 @@ class UserController extends AbstractController
     public function edit(
         Request $request,
         SluggerInterface $slugger,
-        EntityManagerInterface $manager
+        EntityManagerInterface $manager,
+        UserRepository $repository
     ) {
         /** @var User $user */
         $user = $this->getUser();
@@ -66,10 +69,34 @@ class UserController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Pseudo (@todo bug when double ?)
-            $user->setUsername($slugger->slug($user->getFirstname())->lower());
+            // Pseudo
+            $baseUsername = $slugger->slug($user->getFirstname())->lower();
+            $username = $baseUsername;
+            $currentCount = 1;
+            $count = $repository->count(['username' => $username]);
 
-            // @todo Upload
+            while ($count >= 1 && $username !== $user->getUsername()) {
+                $currentCount++;
+                $username = $baseUsername.'-'.$currentCount;
+                $count = $repository->count(['username' => $username]);
+            }
+
+            $user->setUsername($username);
+
+            /** @var UploadedFile $file */
+            $file = $form->get('avatarFile')->getData();
+
+            if ($file) {
+                $publicDir = __DIR__.'/../../public';
+
+                if ($user->getAvatar()) {
+                    $filesystem = new Filesystem();
+                    $filesystem->remove($publicDir.'/'.$user->getAvatar());
+                }
+
+                $file->move($publicDir.'/users', $avatar = $user->getUsername().'-'.uniqid().'.'.$file->guessExtension());
+                $user->setAvatar('users/'.$avatar);
+            }
 
             $manager->flush();
 
