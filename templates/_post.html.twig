@@ -18,7 +18,13 @@
     {% if app.user %}
         <div {{ react_component('Like', {
             id: post.id,
-            isLiked: post.likes.contains(app.user)
+            isLiked: post.likes.contains(app.user),
+            baseComments: post.comments.toArray|map((comment) => {
+                content: comment.content,
+                avatar: comment.creator ? asset(comment.creator.avatar) : null,
+                firstname: comment.creator ? comment.creator.firstname,
+                created_at: comment.createdAt | ago
+            }),
         }) }}></div>
     {% endif %}
 </div>
