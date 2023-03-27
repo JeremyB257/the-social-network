@@ -47,7 +47,7 @@
                     {% if app.user %}
                         <a href="{{ path('app_user_show', { username: app.user.username }) }}" class="flex items-center">
                             {% if app.user.avatar %}
-                            <img class="w-8 h-8 rounded-full mr-3 shadow-md" src="{{ asset(app.user.avatar) }}" alt="{{ app.user.firstname }}">
+                            <img class="w-8 h-8 rounded-full mr-3 shadow-md object-cover" src="{{ asset(app.user.avatar) }}" alt="{{ app.user.firstname }}">
                             {% endif %}
                             <span class="font-bold">{{ app.user.firstname }}</span>
                         </a>

@@ -22,7 +22,7 @@
     {% for comment in post.comments %}
         <div class="flex mb-8">
             {% if comment.creator.avatar %}
-                <img class="w-8 h-8 rounded-full shadow-md mr-3" src="{{ asset(comment.creator.avatar) }}" alt="{{ comment.creator.firstname }}">
+                <img class="w-8 h-8 rounded-full shadow-md mr-3 object-cover" src="{{ asset(comment.creator.avatar) }}" alt="{{ comment.creator.firstname }}">
             {% endif %}
 
             <div>
