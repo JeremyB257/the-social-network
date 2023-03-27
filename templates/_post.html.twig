@@ -1,16 +1,18 @@
 <div class="bg-white mb-8 p-4 rounded shadow">
-    <div class="flex">
-        {% if post.creator.avatar %}
-        <img class="w-8 h-8 rounded-full shadow-md mr-3" src="{{ asset(post.creator.avatar) }}" alt="Fiorella">
-        {% endif %}
-        <div>
-            <h2 class="font-bold text-gray-800 text-sm mb-1">
-                {{ post.creator.firstname }}
-                <span class="text-xs font-light ml-1" title="{{ post.createdAt.format('d/m/Y h:i:s') }}">{{ post.createdAt | ago }}</span>
-            </h2>
+    <a href="{{ path('app_post', { id: post.id }) }}">
+        <div class="flex">
+            {% if post.creator.avatar %}
+            <img class="w-8 h-8 rounded-full shadow-md mr-3" src="{{ asset(post.creator.avatar) }}" alt="{{ post.creator.firstname }}">
+            {% endif %}
             <div>
-                {{ post.content }}
+                <h2 class="font-bold text-gray-800 text-sm mb-1">
+                    {{ post.creator.firstname }}
+                    <span class="text-xs font-light ml-1" title="{{ post.createdAt.format('d/m/Y h:i:s') }}">{{ post.createdAt | ago }}</span>
+                </h2>
+                <div>
+                    {{ post.content }}
+                </div>
             </div>
         </div>
-    </div>
+    </a>
 </div>

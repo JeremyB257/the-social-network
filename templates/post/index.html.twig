@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Publication {{ post.id }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+    {{ include('_post.html.twig') }}
+
+    {% if form %}
+        {{ form_start(form) }}
+            <div class="flex items-center">
+                <div class="flex-grow">
+                    {{ form_widget(form) }}    
+                </div>
+                <div class="ml-4">
+                    <button class="inline-block px-6 py-2 bg-blue-500 hover:bg-blue-600 rounded text-white shadow-md duration-300" formnovalidate>Publier</button>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    {% endif %}
+    
+
+    {% for comment in post.comments %}
+        <div class="flex mb-8">
+            {% if comment.creator.avatar %}
+                <img class="w-8 h-8 rounded-full shadow-md mr-3" src="{{ asset(comment.creator.avatar) }}" alt="{{ comment.creator.firstname }}">
+            {% endif %}
+
+            <div>
+                <h2 class="font-bold text-gray-800">{{ comment.creator.firstname }}</h2>
+                <p>{{ comment.content }}</p>
+                <p class="text-xs text-gray-400">{{ comment.createdAt | ago }}</p>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
