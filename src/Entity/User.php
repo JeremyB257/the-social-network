@@ -49,6 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeImmutable $bornAt = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Assert\Length(min: 20)]
     private ?string $biography = null;
 
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Post::class, orphanRemoval: true)]

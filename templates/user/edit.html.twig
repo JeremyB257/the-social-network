@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier votre profil - {{ parent() }}{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <button class="inline-block px-6 py-2 bg-blue-500 hover:bg-blue-600 rounded text-white shadow-md duration-300" formnovalidate>Modifier</button>
+    {{ form_end(form) }}
+{% endblock %}

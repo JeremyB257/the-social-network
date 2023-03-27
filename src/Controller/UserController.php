@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Form\PostType;
+use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class UserController extends AbstractController
 {
@@ -42,6 +44,30 @@ class UserController extends AbstractController
 
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/membre/profil/modifier', name: 'app_user_edit')]
+    public function edit(Request $request, SluggerInterface $slugger, EntityManagerInterface $manager)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Pseudo (@todo bug when double ?)
+            $user->setUsername($slugger->slug($user->getFirstname())->lower());
+
+            // @todo Upload
+
+            $manager->flush();
+
+            return $this->redirectToRoute('app_user_show', ['username' => $user->getUsername()]);
+        }
+
+        return $this->render('user/edit.html.twig', [
             'form' => $form,
         ]);
     }
