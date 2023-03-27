@@ -15,4 +15,10 @@
             </div>
         </div>
     </a>
+    {% if app.user %}
+        <div {{ react_component('Like', {
+            id: post.id,
+            isLiked: post.likes.contains(app.user)
+        }) }}></div>
+    {% endif %}
 </div>
