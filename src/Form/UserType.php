@@ -4,10 +4,11 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class UserType extends AbstractType
 {
@@ -21,10 +22,9 @@ class UserType extends AbstractType
                 'label' => 'Pseudo',
             ])
             ->add('email')
-            ->add('bornAt', DateType::class, [
+            ->add('bornAt', BirthdayType::class, [
                 'widget' => 'single_text',
                 'label' => 'Date de naissance',
-                'years' => range($y = date('Y'), $y - 120),
                 'input'  => 'datetime_immutable',
             ])
             ->add('biography', null, [
@@ -33,6 +33,9 @@ class UserType extends AbstractType
             ->add('avatarFile', FileType::class, [
                 'mapped' => false,
                 'label' => 'Avatar',
+                'constraints' => [
+                    new File(maxSize: '2048k', mimeTypes: ['image/jpeg', 'image/jpg', 'image/png']),
+                ],
             ])
             // ->add('avatar')
             // ->add('password')

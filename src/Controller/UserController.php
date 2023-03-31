@@ -70,15 +70,15 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Pseudo
-            $baseUsername = $slugger->slug($user->getFirstname())->lower();
+            $baseUsername = $slugger->slug($user->getFirstname())->lower(); // fiorella
             $username = $baseUsername;
             $currentCount = 1;
-            $count = $repository->count(['username' => $username]);
+            $count = $repository->count(['username' => $username]); // SELECT COUNT(*) FROM user WHERE username = 'fiorella'
 
             while ($count >= 1 && $username !== $user->getUsername()) {
                 $currentCount++;
-                $username = $baseUsername.'-'.$currentCount;
-                $count = $repository->count(['username' => $username]);
+                $username = $baseUsername.'-'.$currentCount; // fiorella-2
+                $count = $repository->count(['username' => $username]); // SELECT COUNT(*) FROM user WHERE username = 'fiorella-2'
             }
 
             $user->setUsername($username);

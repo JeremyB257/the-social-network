@@ -64,10 +64,10 @@ export default function ({ id, isLiked, baseComments }) {
                 </form>
 
                 <div className="mt-4">
-                    {comments.map(comment =>                            
+                    {comments.map(comment =>
                         <div className="flex mb-4">
                             <img className="w-8 h-8 rounded-full shadow-md mr-3 object-cover" src={comment.avatar} alt={comment.firstname} />
-                
+
                             <div>
                                 <h2 className="font-bold text-gray-800">{comment.firstname}</h2>
                                 <p>{comment.content}</p>

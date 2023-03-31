@@ -21,7 +21,7 @@
             isLiked: post.likes.contains(app.user),
             baseComments: post.comments.toArray|map((comment) => {
                 content: comment.content,
-                avatar: comment.creator ? asset(comment.creator.avatar) : null,
+                avatar: comment.creator.avatar ? asset(comment.creator.avatar) : null,
                 firstname: comment.creator ? comment.creator.firstname,
                 created_at: comment.createdAt | ago
             }),

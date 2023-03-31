@@ -59,7 +59,6 @@ class PostController extends AbstractController
         //     ->add('name', null, [
         //         'constraints' => [new NotBlank()]
         //     ])->getForm();
-        
 
         if (!$form->isValid()) {
             $errors = [];
