@@ -77,7 +77,7 @@ class UserController extends AbstractController
 
             while ($count >= 1 && $username !== $user->getUsername()) {
                 $currentCount++;
-                $username = $baseUsername.'-'.$currentCount; // fiorella-2
+                $username = $baseUsername . '-' . $currentCount; // fiorella-2
                 $count = $repository->count(['username' => $username]); // SELECT COUNT(*) FROM user WHERE username = 'fiorella-2'
             }
 
@@ -87,15 +87,15 @@ class UserController extends AbstractController
             $file = $form->get('avatarFile')->getData();
 
             if ($file) {
-                $publicDir = __DIR__.'/../../public';
+                $publicDir = __DIR__ . '/../../public';
 
                 if ($user->getAvatar()) {
                     $filesystem = new Filesystem();
-                    $filesystem->remove($publicDir.'/'.$user->getAvatar());
+                    $filesystem->remove($publicDir . '/' . $user->getAvatar());
                 }
 
-                $file->move($publicDir.'/users', $avatar = $user->getUsername().'-'.uniqid().'.'.$file->guessExtension());
-                $user->setAvatar('users/'.$avatar);
+                $file->move($publicDir . '/users', $avatar = $user->getUsername() . '-' . uniqid() . '.' . $file->guessExtension());
+                $user->setAvatar('users/' . $avatar);
             }
 
             $manager->flush();
